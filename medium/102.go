@@ -16,6 +16,32 @@ type MyTreeNode struct {
 	Depth  int
 }
 
+func levelOrderSolutionUTube(root *TreeNode) [][]int {
+	res := [][]int{}
+	if root == nil {
+		return res
+	}
+	queue := list.New()
+	queue.PushBack(root)
+	for queue.Len() > 0 {
+		qLen := queue.Len()
+		qRes := []int{}
+		for i := 0; i < qLen; i++ {
+			q := queue.Front()
+			queue.Remove(q)
+			qTreeNode := q.Value.(*TreeNode)
+			if qTreeNode != nil {
+				qRes = append(qRes, qTreeNode.Val)
+				queue.PushBack(qTreeNode.Left)
+				queue.PushBack(qTreeNode.Right)
+			}
+		}
+		if len(qRes) > 0 {
+			res = append(res, qRes)
+		}
+	}
+	return res
+}
 func levelOrder(root *TreeNode) [][]int {
 	res := [][]int{}
 	if root == nil {
